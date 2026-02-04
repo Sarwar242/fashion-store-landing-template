@@ -1,0 +1,46 @@
+services:
+  # MySQL Database - Running on port 3307 (instead of default 3306)
+  mysql:
+    image: mysql:8.0
+    container_name: php-project-mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: phpproject
+      MYSQL_USER: phpuser
+      MYSQL_PASSWORD: phppassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - php-network
+
+  # Instance 3 - Running on port 9082
+  web-9082:
+    build: .
+    container_name: php-project-9082
+    ports:
+      - "9082:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=phpproject
+      - DB_USER=phpuser
+      - DB_PASSWORD=phppassword
+    depends_on:
+      - mysql
+    restart: unless-stopped
+    networks:
+      - php-network
+
+networks:
+  php-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local
