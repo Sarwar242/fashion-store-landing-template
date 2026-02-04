@@ -17,9 +17,7 @@ docker-compose up -d
 
 This will start:
 - **MySQL Database** on port **3307** (external) / 3306 (internal)
-- Three PHP application instances:
-  - **Port 9080**: http://localhost:9080
-  - **Port 9081**: http://localhost:9081
+- PHP application instance:
   - **Port 9082**: http://localhost:9082
 
 ### Run Specific Instance
@@ -27,12 +25,6 @@ This will start:
 To run only one instance on a specific port:
 
 ```bash
-# Run MySQL and the instance on port 9080
-docker-compose up -d mysql web-9080
-
-# Run MySQL and the instance on port 9081
-docker-compose up -d mysql web-9081
-
 # Run MySQL and the instance on port 9082
 docker-compose up -d mysql web-9082
 ```
@@ -46,7 +38,7 @@ docker-compose down
 
 ### Stop Specific Instance
 ```bash
-docker-compose stop web-9080
+docker-compose stop web-9082
 ```
 
 ### View Logs
